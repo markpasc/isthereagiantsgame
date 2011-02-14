@@ -1,3 +1,6 @@
+from google.appengine.dist import use_library
+use_library('django', '0.96')
+
 from datetime import date
 from os.path import join, dirname
 from random import choice
