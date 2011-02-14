@@ -1,13 +1,13 @@
 from datetime import datetime, timedelta
+from pprint import pformat
 import sys
 
 from icalendar import Calendar
 
 
 def data_for_vevent(ev):
-    start_date, end_date = [ev[which].dt.replace(tzinfo=None) + timedelta(hours=-9) for which in ('DTSTART', 'DTEND')]
-
-    # TODO: convert to PT
+    start_date, end_date = [ev[which].dt.replace(tzinfo=None) + timedelta(hours=-9)
+        for which in ('DTSTART', 'DTEND')]
 
     return (start_date.date(), str(ev['SUMMARY']), start_date, end_date)
 
@@ -21,8 +21,11 @@ def main(argv):
     event_datas = (data_for_vevent(ev) for ev in vevents)
 
     ordered_event_data = sorted(event_datas, key=lambda d: d[0])
-    for data in ordered_event_data:
-        print str(data)
+
+    with open('giants_schedule.py', 'w') as outfile:
+        outfile.write('import datetime\n\n\n')
+        outfile.write('schedule = ')
+        outfile.write(pformat(tuple(ordered_event_data)))
 
     return 0
 
