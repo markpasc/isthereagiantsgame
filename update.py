@@ -5,6 +5,14 @@ import sys
 from icalendar import Calendar
 
 
+def future_events_for_vevents(events):
+    today = datetime.today().date()
+    for event in events:
+        if event['DTSTART'].dt.date() < today:
+            continue
+        yield event
+
+
 def data_for_vevent(ev):
     start_date, end_date = [ev[which].dt.replace(tzinfo=None) + timedelta(hours=-9)
         for which in ('DTSTART', 'DTEND')]
@@ -18,7 +26,8 @@ def main(argv):
     cal = Calendar.from_string(cal_str)
 
     vevents = (ev for ev in cal.walk() if ev.name == 'VEVENT')
-    event_datas = (data_for_vevent(ev) for ev in vevents)
+    future_vevents = future_events_for_vevents(vevents)
+    event_datas = (data_for_vevent(ev) for ev in future_vevents)
 
     ordered_event_data = sorted(event_datas, key=lambda d: d[0])
 
