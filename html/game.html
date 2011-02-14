@@ -8,14 +8,16 @@
     <div id="container">
         <p id="top">Is there a Giants game?</p>
 
+        <div id="answer">
         {% if gametoday and homegame %}
-            <h1>YES</h1>
+            <h1><img src="/static/yes.png" width="381" height="152" alt="YES"></h1>
         {% else %}{% if gametoday %}
-            <p id="away-header">Yes, but it's</p>
-            <h1>AWAY</h1>
+            <p>Yes, but it's</p>
+            <h1><img src="/static/away.png" width="561" height="149" alt="AWAY"></h1>
         {% else %}
-            <h1>NOPE</h1>
+            <h1><img src="/static/nope.png" width="536" height="150" alt="NOPE"></h1>
         {% endif %}{% endif %}
+        </div>
 
         <p>
             {% if not gametoday %}Next game {{ nextgame.2|date:"l, M j" }}<br>{% endif %}
