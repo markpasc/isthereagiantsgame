@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {{ block.super }}
+
+    {% if gametoday and homegame %}
+        <h1>YES</h1>
+    {% else %}{% if gametoday %}
+        <p id="away-header">Yes, but it's</p>
+        <h1>AWAY</h1>
+    {% else %}
+        <h1>NOPE</h1>
+    {% endif %}{% endif %}
+
+    <p>
+        {% if not gametoday %}Next game {{ nextgame.2|date:"l, M j" }}<br>{% endif %}
+        {{ nextgame.1 }}<br>
+        {{ nextgame.2|date:"g:i" }} <small>{{ nextgame.2|date:"A" }}</small> &ndash;
+        {{ nextgame.3|date:"g:i" }} <small>{{ nextgame.3|date:"A" }}</small>
+    </p>
+
+{% endblock %}
