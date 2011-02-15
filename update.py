@@ -6,7 +6,8 @@ from icalendar import Calendar
 
 
 def future_events_for_vevents(events):
-    today = datetime.today().date()
+    now = datetime.utcnow() + timedelta(hours=-9)
+    today = now.date()
     for event in events:
         if event['DTSTART'].dt.date() < today:
             continue

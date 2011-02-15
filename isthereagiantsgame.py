@@ -1,7 +1,7 @@
 from google.appengine.dist import use_library
 use_library('django', '0.96')
 
-from datetime import date
+from datetime import datetime, timedelta
 from os.path import join, dirname
 from random import choice
 
@@ -14,7 +14,9 @@ from giants_schedule import schedule
 
 class MainPage(webapp.RequestHandler):
     def get(self):
-        today = date.today()
+        now = datetime.utcnow() + timedelta(hours=-9)
+        today = now.date()
+
         for game in schedule:
             if game[0] >= today:
                 break
@@ -22,6 +24,7 @@ class MainPage(webapp.RequestHandler):
             game = None
 
         data = {
+            'today': today,
             'gametoday': game[0] == today,
             'homegame': game[1].endswith('at San Francisco'),
             'nextgame': game,
