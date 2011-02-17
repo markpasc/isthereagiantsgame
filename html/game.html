@@ -25,6 +25,18 @@
         #answer {
             margin: 80px 0;
         }
+
+        #colophon {
+            position: absolute;
+            left: 0;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+        }
+        a.raquo {
+            font-size: 1.2em;
+            text-decoration: none;
+        }
     </style>
 </head><body>
 
@@ -49,6 +61,12 @@
             {{ nextgame.2|date:"g:i" }} <small>{{ nextgame.2|date:"A" }}</small> &ndash;
             {{ nextgame.3|date:"g:i" }} <small>{{ nextgame.3|date:"A" }}</small>
         </p>
+    </div>
+
+    <div id="colophon">
+        by <a href="http://markpasc.org/mark/">markpasc</a> &amp; friends &bull;
+        <a href="http://sports.yahoo.com/mlb/teams/sfo/schedule">Full schedule</a>
+        <a href="http://sports.yahoo.com/mlb/teams/sfo/schedule" class="raquo">&raquo;</a>
     </div>
 
     <script type="text/javascript">
