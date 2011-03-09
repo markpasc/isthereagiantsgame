@@ -27,11 +27,9 @@
         }
 
         #colophon {
-            position: absolute;
-            left: 0;
-            bottom: 20px;
             width: 100%;
             text-align: center;
+            margin: 0 0 2ex;
         }
         a.raquo {
             font-size: 1.2em;
@@ -61,6 +59,15 @@
             {{ nextgame.2|date:"g:i" }} <small>{{ nextgame.2|date:"A" }}</small> &ndash;
             {{ nextgame.3|date:"g:i" }} <small>{{ nextgame.3|date:"A" }}</small>
         </p>
+
+        {% if firsthomegame %}
+        <p>
+            First game at AT&amp;T Park {{ firsthomegame.2|date:"l, M j" }}<br>
+            {{ firsthomegame.1 }}<br>
+            {{ firsthomegame.2|date:"g:i" }} <small>{{ firsthomegame.2|date:"A" }}</small> &ndash;
+            {{ firsthomegame.3|date:"g:i" }} <small>{{ firsthomegame.3|date:"A" }}</small>
+        </p>
+        {% endif %}
     </div>
 
     <div id="colophon">

@@ -30,6 +30,13 @@ class MainPage(webapp.RequestHandler):
             'nextgame': game,
         }
 
+        opening_day = datetime(year=2011, month=4, day=1).date()
+        if today < opening_day:
+            for homegame in schedule:
+                if homegame[0] >= opening_day and homegame[1].endswith('at San Francisco'):
+                    data['firsthomegame'] = homegame
+                    break
+
         path = join(dirname(__file__), 'html', 'game.html')
         html = template.render(path, data)
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8'

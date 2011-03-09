@@ -18,7 +18,11 @@ def data_for_vevent(ev):
     start_date, end_date = [ev[which].dt.replace(tzinfo=None) + timedelta(hours=-9)
         for which in ('DTSTART', 'DTEND')]
 
-    return (start_date.date(), str(ev['SUMMARY']), start_date, end_date)
+    summary = str(ev['SUMMARY'])
+    if start_date < datetime(year=2011, month=4, day=1):
+        summary = '%s*' % summary
+
+    return (start_date.date(), summary, start_date, end_date)
 
 
 def main(argv):
