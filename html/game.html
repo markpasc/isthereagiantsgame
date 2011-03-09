@@ -40,7 +40,7 @@
 
     <div id="container">
         <p id="top">Is there a Giants game?</p>
-        <!-- today is {{ today|date:"l, M j" }} -->
+        <!-- today is {{ today.strftime('%A, %b %d').replace(' 0', ' ') }} -->
 
         <div id="answer">
         {% if gametoday and homegame %}
@@ -54,18 +54,18 @@
         </div>
 
         <p>
-            {% if not gametoday %}Next game {{ nextgame.2|date:"l, M j" }}<br>{% endif %}
-            {{ nextgame.1 }}<br>
-            {{ nextgame.2|date:"g:i" }} <small>{{ nextgame.2|date:"A" }}</small> &ndash;
-            {{ nextgame.3|date:"g:i" }} <small>{{ nextgame.3|date:"A" }}</small>
+            {% if not gametoday %}Next game {{ nextgame[2].strftime('%A, %b %d').replace(' 0', ' ') }}<br>{% endif %}
+            {{ nextgame[1] }}<br>
+            {{ nextgame[2].strftime(' %I:%M').replace(' 0', ' ') }} <small>{{ nextgame[2].strftime('%p') }}</small> &ndash;
+            {{ nextgame[3].strftime(' %I:%M').replace(' 0', ' ') }} <small>{{ nextgame[3].strftime('%p') }}</small>
         </p>
 
         {% if firsthomegame %}
         <p>
-            First game at AT&amp;T Park {{ firsthomegame.2|date:"l, M j" }}<br>
-            {{ firsthomegame.1 }}<br>
-            {{ firsthomegame.2|date:"g:i" }} <small>{{ firsthomegame.2|date:"A" }}</small> &ndash;
-            {{ firsthomegame.3|date:"g:i" }} <small>{{ firsthomegame.3|date:"A" }}</small>
+            First game at AT&amp;T Park {{ firsthomegame[2].strftime('%A, %b %d').replace(' 0', ' ') }}<br>
+            {{ firsthomegame[1] }}<br>
+            {{ firsthomegame[2].strftime(' %I:%M').replace(' 0', ' ') }} <small>{{ firsthomegame[2].strftime('%p') }}</small> &ndash;
+            {{ firsthomegame[3].strftime(' %I:%M').replace(' 0', ' ') }} <small>{{ firsthomegame[3].strftime('%p') }}</small>
         </p>
         {% endif %}
     </div>
