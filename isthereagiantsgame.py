@@ -52,7 +52,7 @@ class Application(object):
 
         template = self.jinja.get_template('game.html')
         html = template.render(**data)
-        return Response(html, content_type='text/html; charset=utf-8')
+        return Response(html, content_type='text/html')
 
     def static(self, request, path):
         # Does the file exist?
