@@ -19,7 +19,7 @@ def data_for_vevent(ev):
         for which in ('DTSTART', 'DTEND')]
 
     summary = str(ev['SUMMARY'])
-    if start_date < datetime(year=2011, month=4, day=1):
+    if start_date < datetime(year=2011, month=3, day=30):
         summary = '%s*' % summary
 
     return (start_date.date(), summary, start_date, end_date)
