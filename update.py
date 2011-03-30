@@ -3,6 +3,7 @@ from pprint import pformat
 import sys
 
 from icalendar import Calendar
+from pytz import timezone
 
 
 def future_events_for_vevents(events):
@@ -15,7 +16,7 @@ def future_events_for_vevents(events):
 
 
 def data_for_vevent(ev):
-    start_date, end_date = [ev[which].dt.replace(tzinfo=None) + timedelta(hours=-9)
+    start_date, end_date = [ev[which].dt.astimezone(timezone('America/Los_Angeles')).replace(tzinfo=None)
         for which in ('DTSTART', 'DTEND')]
 
     summary = str(ev['SUMMARY'])
