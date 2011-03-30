@@ -30,25 +30,21 @@ class Application(object):
         now = datetime.utcnow() + timedelta(hours=-9)
         today = now.date()
 
+        nextgame, nexthomegame = None, None
         for game in schedule:
             if game[0] >= today:
-                break
-        if game[0] < today:
-            game = None
+                nextgame = nextgame or game
+                if game[1].endswith('at San Francisco'):
+                    nexthomegame = game
+                    break
 
         data = {
             'today': today,
-            'gametoday': game[0] == today,
-            'homegame': game[1].endswith('at San Francisco'),
-            'nextgame': game,
+            'gametoday': nextgame[0] == today,
+            'nextgame': nextgame,
+            'nexthomegame': nexthomegame,
+            'homegame': nextgame is nexthomegame,
         }
-
-        opening_day = datetime(year=2011, month=4, day=1).date()
-        if today < opening_day:
-            for homegame in schedule:
-                if homegame[0] >= opening_day and homegame[1].endswith('at San Francisco'):
-                    data['firsthomegame'] = homegame
-                    break
 
         template = self.jinja.get_template('game.html')
         html = template.render(**data)

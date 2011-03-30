@@ -60,12 +60,12 @@
             {{ nextgame[3].strftime(' %I:%M').replace(' 0', ' ') }} <small>{{ nextgame[3].strftime('%p') }}</small>
         </p>
 
-        {% if firsthomegame %}
+        {% if not homegame and nexthomegame %}
         <p>
-            First season game at <a href="http://maysfield.org/">Mays Field</a> {{ firsthomegame[2].strftime('%A, %b %d').replace(' 0', ' ') }}<br>
-            {{ firsthomegame[1] }}<br>
-            {{ firsthomegame[2].strftime(' %I:%M').replace(' 0', ' ') }} <small>{{ firsthomegame[2].strftime('%p') }}</small> &ndash;
-            {{ firsthomegame[3].strftime(' %I:%M').replace(' 0', ' ') }} <small>{{ firsthomegame[3].strftime('%p') }}</small>
+            Next game at <a href="http://maysfield.org/">Mays Field</a> {{ nexthomegame[2].strftime('%A, %b %d').replace(' 0', ' ') }}<br>
+            {{ nexthomegame[1] }}<br>
+            {{ nexthomegame[2].strftime(' %I:%M').replace(' 0', ' ') }} <small>{{ nexthomegame[2].strftime('%p') }}</small> &ndash;
+            {{ nexthomegame[3].strftime(' %I:%M').replace(' 0', ' ') }} <small>{{ nexthomegame[3].strftime('%p') }}</small>
         </p>
         {% endif %}
     </div>
