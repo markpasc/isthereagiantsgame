@@ -62,7 +62,7 @@
 
         {% if not homegame and nexthomegame %}
         <p>
-            Next game at <a href="http://maysfield.org/">Mays Field</a> {{ nexthomegame[2].strftime('%A, %b %d').replace(' 0', ' ') }}<br>
+            Next home game at <a href="http://maysfield.org/">Mays Field</a> {{ nexthomegame[2].strftime('%A, %b %d').replace(' 0', ' ') }}<br>
             {{ nexthomegame[1] }}<br>
             {{ nexthomegame[2].strftime(' %I:%M').replace(' 0', ' ') }} <small>{{ nexthomegame[2].strftime('%p') }}</small> &ndash;
             {{ nexthomegame[3].strftime(' %I:%M').replace(' 0', ' ') }} <small>{{ nexthomegame[3].strftime('%p') }}</small>
