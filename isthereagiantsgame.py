@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from os.path import join, dirname, normpath, relpath, isfile
 from random import choice
+import re
 import mimetypes
 import sys
 from traceback import format_exception
@@ -23,12 +24,32 @@ class Application(object):
         self.static_path = join(dirname(__file__), 'static')
 
         self.map = Mapper()
-        self.map.connect('index', '/', method='get')
+        self.map.connect('index', '/{when:[^/]*}', method='get')
         self.map.connect('static', '/static/{path}', method='static')
 
-    def get(self, request):
+    def day_for_when(self, when):
+        mo = re.match(r'(\d{4})(\d{2})(\d{2})', when)
+        if mo is not None:
+            year, month, day = [int(mo.group(i)) for i in range(1, 4)]
+            return datetime(year=year, month=month, day=day).date()
+
         now = datetime.utcnow() + timedelta(hours=-9)
         today = now.date()
+        when = when.lower()
+
+        if not when or when == 'today':
+            return today
+
+        if when == 'tomorrow':
+            return today + timedelta(days=1)
+
+        for addl_days in xrange(1, 8):
+            maybe_today = today + timedelta(days=addl_days)
+            if when in [maybe_today.strftime(x).lower() for x in ('%a', '%A')]:
+                return maybe_today
+
+    def get(self, request, when):
+        today = self.day_for_when(when)
 
         nextgame, nexthomegame = None, None
         for game in schedule:
