@@ -25,6 +25,7 @@ class Application(object):
 
         self.map = Mapper()
         self.map.connect('index', '/{when:[^/]*}', method='get')
+        self.map.connect('api', '/api/{when}', method='api')
         self.map.connect('static', '/static/{path}', method='static')
 
     def day_for_when(self, when):
@@ -48,9 +49,7 @@ class Application(object):
             if when in [maybe_today.strftime(x).lower() for x in ('%a', '%A')]:
                 return maybe_today
 
-    def get(self, request, when):
-        today = self.day_for_when(when)
-
+    def nextgames(self, today):
         nextgame, nexthomegame = None, None
         for game in schedule:
             if game[0] >= today:
@@ -58,6 +57,13 @@ class Application(object):
                 if game[1].endswith('at San Francisco'):
                     nexthomegame = game
                     break
+        return nextgame, nexthomegame
+
+    def get(self, request, when):
+        today = self.day_for_when(when)
+        if today is None:
+            return HTTPNotFound()
+        nextgame, nexthomegame = self.nextgames(today)
 
         data = {
             'today': today,
@@ -70,6 +76,17 @@ class Application(object):
         template = self.jinja.get_template('game.html')
         html = template.render(**data)
         return Response(html, content_type='text/html')
+
+    def api(self, request, when):
+        today = self.day_for_when(when)
+        if today is None:
+            return Response("no such day '%s'" % when, status=400, content_type='text/plain')
+        nextgame, nexthomegame = self.nextgames(today)
+        if nextgame[0] == today:
+            if nextgame is nexthomegame:
+                return Response("yes", status=200, content_type='text/plain')
+            return Response(status=204)
+        return Response(nextgame[0].strftime("next home game %Y%m%d"), status=404, content_type='text/plain')
 
     def static(self, request, path):
         # Does the file exist?
