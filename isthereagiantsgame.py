@@ -71,6 +71,7 @@ class Application(object):
             'nextgame': nextgame,
             'nexthomegame': nexthomegame,
             'homegame': nextgame is nexthomegame,
+            'root_url': '://'.join(request.environ[x] for x in ('wsgi.url_scheme', 'HTTP_HOST')),
         }
 
         template = self.jinja.get_template('game.html')
