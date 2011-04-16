@@ -6,9 +6,8 @@ from icalendar import Calendar
 from pytz import timezone
 
 
-def future_events_for_vevents(events):
-    now = datetime.utcnow() + timedelta(hours=-9)
-    today = now.date()
+def current_events_for_vevents(events):
+    today = datetime(year=2011, month=1, day=1).date()
     for event in events:
         if event['DTSTART'].dt.date() < today:
             continue
@@ -32,8 +31,8 @@ def main(argv):
     cal = Calendar.from_string(cal_str)
 
     vevents = (ev for ev in cal.walk() if ev.name == 'VEVENT')
-    future_vevents = future_events_for_vevents(vevents)
-    event_datas = (data_for_vevent(ev) for ev in future_vevents)
+    current_vevents = current_events_for_vevents(vevents)
+    event_datas = (data_for_vevent(ev) for ev in current_vevents)
 
     ordered_event_data = sorted(event_datas, key=lambda d: d[0])
 
