@@ -67,7 +67,7 @@ class Application(object):
 
         data = {
             'today': today,
-            'gametoday': nextgame[0] == today,
+            'gametoday': nextgame and nextgame[0] == today,
             'nextgame': nextgame,
             'nexthomegame': nexthomegame,
             'homegame': nextgame is nexthomegame,

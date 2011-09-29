@@ -55,12 +55,14 @@
         {% endif %}{% endif %}
         </div>
 
+        {% if nextgame %}
         <p>
             {% if not gametoday %}Next game {{ nextgame[2].strftime('%A, %b %d').replace(' 0', ' ') }}<br>{% endif %}
             {{ nextgame[1] }}<br>
             {{ nextgame[2].strftime(' %I:%M').replace(' 0', ' ') }} <small>{{ nextgame[2].strftime('%p') }}</small> &ndash;
             {{ nextgame[3].strftime(' %I:%M').replace(' 0', ' ') }} <small>{{ nextgame[3].strftime('%p') }}</small>
         </p>
+        {% endif %}
 
         {% if not homegame and nexthomegame %}
         <p>
